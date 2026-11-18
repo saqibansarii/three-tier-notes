@@ -1,0 +1,55 @@
+:root {
+  --ink: #14213d;
+  --paper: #eef1f5;
+  --card: #ffffff;
+  --line: #c9d1dc;
+  --accent: #0f766e;
+  --mark: #fce588;
+  --danger: #a4262c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  line-height: 1.55;
+}
+h1, h2, button, label, time {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+}
+.page { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+.masthead { border-bottom: 3px solid var(--ink); padding-bottom: .75rem; margin-bottom: 1.5rem; }
+.masthead h1 { font-size: 2.4rem; margin: 0; letter-spacing: -0.02em; }
+.masthead p { margin: .25rem 0 0; color: #4a5872; }
+
+.entry { display: grid; gap: .4rem; background: var(--card); border: 1px solid var(--line); padding: 1.25rem; border-radius: 6px; }
+.entry label { font-size: .85rem; font-weight: 700; }
+.entry input, .entry textarea {
+  font: inherit; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 4px; background: #fbfcfd; color: inherit;
+}
+.entry textarea { resize: vertical; }
+button {
+  font-weight: 700; font-size: .9rem; padding: .55rem 1rem; border: 0; border-radius: 4px;
+  background: var(--accent); color: #fff; cursor: pointer; justify-self: start;
+}
+button:disabled { opacity: .45; cursor: not-allowed; }
+button.quiet { background: transparent; color: var(--danger); }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+.error { margin-top: 1rem; padding: .8rem 1rem; border-left: 4px solid var(--danger); background: #fbeaea; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.empty { margin-top: 2rem; color: #4a5872; }
+
+.notes { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: .9rem; }
+.notes li {
+  display: flex; justify-content: space-between; gap: 1rem; background: var(--card);
+  border: 1px solid var(--line); border-left: 8px solid var(--mark); padding: 1rem 1.1rem; border-radius: 4px;
+}
+.notes li.done { border-left-color: var(--accent); opacity: .7; }
+.notes li.done h2 { text-decoration: line-through; }
+.notes h2 { font-size: 1.1rem; margin: 0 0 .2rem; }
+.notes p { margin: 0 0 .4rem; }
+.notes time { font-size: .8rem; color: #4a5872; }
+.actions { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; }
+@media (max-width: 480px) { .notes li { flex-direction: column; } .actions { flex-direction: row; align-items: center; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
