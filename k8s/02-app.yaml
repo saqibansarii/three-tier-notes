@@ -42,7 +42,7 @@ spec:
               app: notes-api
       containers:
         - name: api
-          image: <IMAGE_URI>
+          image: 020784397875.dkr.ecr.eu-west-2.amazonaws.com/notes-backend:79e217fd
           ports:
             - containerPort: 5000
           envFrom:

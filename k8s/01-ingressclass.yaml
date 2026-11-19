@@ -7,7 +7,7 @@ spec:
   scheme: internet-facing
   targetType: ip
   certificateARNs:
-    - <ACM_CERT_ARN>
+    - arn:aws:acm:eu-west-2:020784397875:certificate/5f5a9567-bd74-46b0-bc15-792e3fb83afc
 ---
 apiVersion: networking.k8s.io/v1
 kind: IngressClass
