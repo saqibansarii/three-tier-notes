@@ -53,7 +53,7 @@ export default function App() {
   return (
     <main className="page">
       <header className="masthead">
-        <h1>Field Notes</h1>
+        <h1>Three tier Notes App</h1>
         <p>{loading ? 'Loading…' : `${open} open, ${notes.length - open} done`}</p>
       </header>
 
