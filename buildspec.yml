@@ -1,11 +1,12 @@
 version: 0.2
-# CodeBuild environment variables to set in the console:
-#   AWS_ACCOUNT_ID, AWS_DEFAULT_REGION (eu-west-2), IMAGE_REPO_NAME (notes-backend)
+# Build stage: builds the backend image, pushes it to ECR and writes the new image
+# address into k8s/02-app.yaml. The k8s folder is passed on to the deploy stage.
+# CodeBuild environment variables: AWS_ACCOUNT_ID, AWS_DEFAULT_REGION (eu-west-2), IMAGE_REPO_NAME (notes-backend)
 phases:
   pre_build:
     commands:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-8)
+      - 'if [ -n "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-8); else IMAGE_TAG=build-$CODEBUILD_BUILD_NUMBER; fi'
       - REPO_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
   build:
     commands:
@@ -13,4 +14,8 @@ phases:
   post_build:
     commands:
       - docker push $REPO_URI:$IMAGE_TAG
+      - 'sed -i "s|image: .*|image: $REPO_URI:$IMAGE_TAG|" k8s/02-app.yaml'
       - echo "IMAGE PUSHED -> $REPO_URI:$IMAGE_TAG"
+artifacts:
+  files:
+    - 'k8s/**/*'

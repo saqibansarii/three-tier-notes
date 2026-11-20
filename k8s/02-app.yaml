@@ -1,9 +1,5 @@
 # Replace <IMAGE_URI> with the image CodeBuild pushed, and FRONTEND_URL with your frontend address.
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: notes
----
+
 apiVersion: v1
 kind: ConfigMap
 metadata:

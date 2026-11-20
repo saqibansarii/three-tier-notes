@@ -1,0 +1,17 @@
+version: 0.2
+# Deploy stage: runs inside the VPC and updates the app on EKS through the cluster's private endpoint.
+# CodeBuild environment variables: AWS_DEFAULT_REGION (eu-west-2), EKS_CLUSTER_NAME (notes-eks),
+# KUBECTL_VERSION (optional, for example v1.33.0, keep it within one minor version of the cluster)
+phases:
+  install:
+    commands:
+      - KV=${KUBECTL_VERSION:-$(curl -sL https://dl.k8s.io/release/stable.txt)}
+      - curl -sLo kubectl https://dl.k8s.io/release/$KV/bin/linux/amd64/kubectl
+      - chmod +x kubectl && mv kubectl /usr/local/bin/kubectl
+      - kubectl version --client
+  build:
+    commands:
+      - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER_NAME
+      - grep "image:" k8s/02-app.yaml
+      - kubectl apply -f k8s/02-app.yaml
+      - kubectl -n notes rollout status deployment/notes-api --timeout=300s
