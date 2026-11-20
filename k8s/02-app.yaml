@@ -11,7 +11,7 @@ metadata:
   namespace: notes
 data:
   PORT: "5000"
-  FRONTEND_URL: "https://notes.cloudenvironment.online"
+  FRONTEND_URL: "https://main.d90zvuzs6dno1.amplifyapp.com,https://cloudenvironment.online,https://www.cloudenvironment.online"
 ---
 apiVersion: apps/v1
 kind: Deployment

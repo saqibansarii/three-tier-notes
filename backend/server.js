@@ -6,7 +6,13 @@ const { pool, init, isReady } = require('./db');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: process.env.FRONTEND_URL || '*' }));
+// FRONTEND_URL can hold several addresses separated by commas
+const allowedOrigins = (process.env.FRONTEND_URL || '*')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: allowedOrigins.includes('*') ? '*' : allowedOrigins }));
 app.use(express.json());
 
 // Health checks answer even while the database is still starting.
