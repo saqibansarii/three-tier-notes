@@ -19,3 +19,4 @@ phases:
 artifacts:
   files:
     - 'k8s/**/*'
+    - 'buildspec-deploy.yml'
