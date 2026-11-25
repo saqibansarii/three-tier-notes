@@ -16,7 +16,7 @@ app.use(cors({ origin: allowedOrigins.includes('*') ? '*' : allowedOrigins }));
 app.use(express.json());
 
 // Health checks answer even while the database is still starting.
-app.get('/', (req, res) => res.json({ status: 'ok', service: 'notes-api', version: 2 }));
+app.get('/', (req, res) => res.json({ status: 'ok', service: 'notes-api', version: 3 }));
 app.get('/health', (req, res) => res.json({ status: 'ok', database: isReady() }));
 
 // Everything under /api needs the database.
